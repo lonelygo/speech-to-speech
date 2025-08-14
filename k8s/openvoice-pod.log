@@ -1,0 +1,35 @@
+/opt/conda/lib/python3.11/site-packages/df/io.py:9: UserWarning: `torchaudio.backend.common.AudioMetaData` has been moved to `torchaudio.AudioMetaData`. Please update the import path.
+  from torchaudio.backend.common import AudioMetaData
+[nltk_data] Downloading package averaged_perceptron_tagger_eng to
+[nltk_data]     /root/.cache/nltk_data...
+[nltk_data]   Package averaged_perceptron_tagger_eng is already up-to-
+[nltk_data]       date!
+Using cache found in /root/.cache/torch/hub/snakers4_silero-vad_master
+2025-08-14 03:38:34,842 - LLM.openai_api_language_model - INFO - Warming up OpenApiModelHandler
+2025-08-14 03:38:36,164 - httpx - INFO - HTTP Request: POST https://maas.mubingdata.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-14 03:38:36,165 - LLM.openai_api_language_model - INFO - OpenApiModelHandler:  warmed up! time: 1.323 s
+2025-08-14 03:38:42,986 - TTS.openvoice_handler - INFO - Loading MeloTTS base speaker for language: ZH
+/opt/conda/lib/python3.11/site-packages/torch/nn/utils/weight_norm.py:144: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+Traceback (most recent call last):
+  File "/usr/src/app/s2s_pipeline.py", line 501, in <module>
+    main()
+  File "/usr/src/app/s2s_pipeline.py", line 475, in main
+    pipeline_manager = build_pipeline(
+                       ^^^^^^^^^^^^^^^
+  File "/usr/src/app/s2s_pipeline.py", line 288, in build_pipeline
+    tts = get_tts_handler(module_kwargs, stop_event, lm_response_queue, send_audio_chunks_queue, should_listen, parler_tts_handler_kwargs, melo_tts_handler_kwargs, chat_tts_handler_kwargs, facebook_mms_tts_handler_kwargs, openvoice_handler_kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/app/s2s_pipeline.py", line 426, in get_tts_handler
+    return OpenVoiceHandler(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/src/app/baseHandler.py", line 20, in __init__
+    self.setup(*setup_args, **setup_kwargs)
+  File "/usr/src/app/TTS/openvoice_handler.py", line 62, in setup
+    self.melo_speaker_id = self.melo_model.hps.data.spk2id[self.base_speaker_name]
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/melo/utils.py", line 415, in __getitem__
+    return getattr(self, key)
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'HParams' object has no attribute 'zh-cn'
+stream closed EOF for maas/s2s-openvoice-deployment-6d5f7b89dd-pgnnf (s2s-container)

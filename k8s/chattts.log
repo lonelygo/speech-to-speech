@@ -1,0 +1,64 @@
+/opt/conda/lib/python3.11/site-packages/df/io.py:9: UserWarning: `torchaudio.backend.common.AudioMetaData` has been moved to `torchaudio.AudioMetaData`. Please update the import path.
+  from torchaudio.backend.common import AudioMetaData
+[nltk_data] Downloading package averaged_perceptron_tagger_eng to
+[nltk_data]     /root/.cache/nltk_data...
+[nltk_data]   Package averaged_perceptron_tagger_eng is already up-to-
+[nltk_data]       date!
+Using cache found in /root/.cache/torch/hub/snakers4_silero-vad_master
+2025-08-13 09:09:27,689 - LLM.openai_api_language_model - INFO - Warming up OpenApiModelHandler
+2025-08-13 09:09:28,998 - httpx - INFO - HTTP Request: POST https://maas.mubingdata.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-08-13 09:09:28,998 - LLM.openai_api_language_model - INFO - OpenApiModelHandler:  warmed up! time: 1.309 s
+2025-08-13 09:09:30,263 - ChatTTS.core - INFO - use device cuda:0
+2025-08-13 09:09:30,411 - ChatTTS.core - INFO - vocos loaded.
+2025-08-13 09:09:30,707 - ChatTTS.core - INFO - dvae loaded.
+2025-08-13 09:09:30,906 - ChatTTS.core - INFO - embed loaded.
+2025-08-13 09:09:31,113 - ChatTTS.core - INFO - gpt loaded.
+2025-08-13 09:09:31,113 - ChatTTS.core - INFO - speaker loaded.
+2025-08-13 09:09:31,255 - ChatTTS.core - INFO - decoder loaded.
+2025-08-13 09:09:31,266 - ChatTTS.core - INFO - tokenizer loaded.
+2025-08-13 09:09:31,306 - TTS.chatTTS_handler - INFO - Warming up ChatTTSHandler
+2025-08-13 09:09:31,307 - ChatTTS.core - INFO - split text into 1 parts
+
+text:   0%|          | 0/384(max) [00:00, ?it/s]
+text:   0%|          | 1/384(max) [00:00,  4.05it/s]We detected that you are passing `past_key_values` as a tuple of tuples. This is deprecated and will be removed in v4.47. Please convert your cache or use an appropriate `Cache` class (https://huggingface.co/docs/transformers/kv_cache#legacy-cache-format)
+
+text:   1%|          | 4/384(max) [00:00, 13.86it/s]
+2025-08-13 09:09:32,183 - ChatTTS.core - INFO - infer split 0~1
+
+code:   0%|          | 0/2048(max) [00:00, ?it/s]
+code:   1%|          | 11/2048(max) [00:00, 109.51it/s]
+code:   1%|          | 14/2048(max) [00:00, 103.39it/s]
+2025-08-13 09:09:32,438 - connections.socket_receiver - INFO - Receiver waiting to be connected...
+2025-08-13 09:09:32,438 - connections.socket_sender - INFO - Sender waiting to be connected...
+2025-08-13 09:12:35,189 - connections.socket_receiver - INFO - receiver connected
+2025-08-13 09:12:35,189 - connections.socket_sender - INFO - sender connected
+2025-08-13 09:12:48,777 - faster_whisper - INFO - Processing audio with duration 00:00.736
+USER: 你在吗
+2025-08-13 09:12:50,254 - httpx - INFO - HTTP Request: POST https://maas.mubingdata.com/v1/chat/completions "HTTP/1.1 200 OK"
+ASSISTANT: 
+! ?
+2025-08-13 09:12:52,405 - ChatTTS.core - INFO - split text into 2 parts
+2025-08-13 09:12:52,406 - ChatTTS.core - WARNING - found invalid characters: {'?', '!'}
+
+text:   0%|          | 0/384(max) [00:00, ?it/s]
+text:   1%|▏         | 5/384(max) [00:00, 72.14it/s]
+
+code:   0%|          | 0/2048(max) [00:00, ?it/s]
+code:   0%|          | 2/2048(max) [00:00, 73.37it/s]
+2025-08-13 09:12:54,071 - ChatTTS.core - INFO - infer split 0~2
+
+code:   0%|          | 0/2048(max) [00:00, ?it/s]
+code:   0%|          | 10/2048(max) [00:00, 91.26it/s]
+code:   1%|          | 15/2048(max) [00:00, 88.12it/s]
+Exception in thread Thread-8 (run):
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.11/threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "/opt/conda/lib/python3.11/threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/src/app/baseHandler.py", line 37, in run
+    for output in self.process(input):
+  File "/usr/src/app/TTS/chatTTS_handler.py", line 92, in process
+    while len(audio_chunk) > self.chunk_size:
+          ^^^^^^^^^^^^^^^^
+TypeError: object of type 'numpy.int16' has no len()

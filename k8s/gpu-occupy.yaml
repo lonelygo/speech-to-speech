@@ -1,0 +1,45 @@
+# This YAML file deploys dummy pods to occupy GPU resources.
+# This is a workaround to "reserve" GPUs from the default scheduler,
+# forcing other workloads onto the remaining available GPUs.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpu-occupier
+  # Assuming you want this in the same 'maas' namespace
+  namespace: xinference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gpu-occupier
+  template:
+    metadata:
+      labels:
+        app: gpu-occupier
+    spec:
+      # If your GPU nodes have taints (e.g., to prevent non-GPU pods from scheduling on them),
+      # you may need to add tolerations here. For example:
+      # tolerations:
+      # - key: "nvidia.com/gpu"
+      #   operator: "Exists"
+      #   effect: "NoSchedule"
+      containers:
+        - name: gpu-occupier-container
+          # Using a minimal official CUDA image. This is necessary for the kubelet
+          # to see the container as a valid GPU user.
+          image: nvidia/cuda:12.9.0-base-ubuntu22.04
+          
+          # This command just keeps the container running indefinitely without consuming CPU.
+          command: ["/bin/bash", "-c", "sleep infinity"]
+          
+          resources:
+            requests:
+              cpu: "100m"         # Minimal CPU request (0.1 core)
+              memory: "256Mi"      # Minimal Memory request
+              nvidia.com/gpu: "1" # The key part: occupy 1 GPU
+            limits:
+              # It's good practice to set limits equal to requests for guaranteed resources.
+              cpu: "100m"
+              memory: "256Mi"
+              nvidia.com/gpu: "1"

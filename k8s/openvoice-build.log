@@ -1,0 +1,188 @@
+
+server@mubing-node-1:~/kevin/speech-to-speech$ sudo nerdctl --namespace k8s.io build -f Dockerfile.openvoice -t s2s-with-openvoice:v1 .
+[+] Building 122.5s (9/14)
+ => [internal] load build definition from Dockerfile.openvoice                                             0.0s
+ => => transferring dockerfile: 1.14kB                                                                     0.0s
+ => [internal] load metadata for docker.1ms.run/pytorch/pytorch:2.8.0-cuda12.9-cudnn9-devel                0.3s
+ => [internal] load .dockerignore                                                                          0.0s
+ => => transferring context: 105B                                                                          0.0s
+ => [ 1/10] FROM docker.1ms.run/pytorch/pytorch:2.8.0-cuda12.9-cudnn9-devel@sha256:cf5aa3f7045a68c10d80f5  0.0s
+ => => resolve docker.1ms.run/pytorch/pytorch:2.8.0-cuda12.9-cudnn9-devel@sha256:cf5aa3f7045a68c10d80f546  0.0s
+ => [internal] load build context                                                                          0.0s
+ => => transferring context: 26.37kB                                                                       0.0s
+ => CACHED [ 2/10] WORKDIR /usr/src/app                                                                    0.0s
+ => CACHED [ 3/10] RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*             0.0s
+ => CACHED [ 4/10] COPY requirements.openvoice.txt ./requirements.txt                                      0.0s
+ => ERROR [ 5/10] RUN pip install --no-cache-dir -r requirements.txt                                     122.1s
+------
+ > [ 5/10] RUN pip install --no-cache-dir -r requirements.txt:
+0.264 Collecting parler_tts@ git+https://github.com/huggingface/parler-tts.git (from -r requirements.txt (line 6))
+0.265   Cloning https://github.com/huggingface/parler-tts.git to /tmp/pip-install-o33997uw/parler-tts_3c83f7b43d194de396d2dae0a382759e
+0.268   Running command git clone --filter=blob:none --quiet https://github.com/huggingface/parler-tts.git /tmp/pip-install-o33997uw/parler-tts_3c83f7b43d194de396d2dae0a382759e
+2.984   Resolved https://github.com/huggingface/parler-tts.git to commit d108732cd57788ec86bc857d99a6cabd66663d68
+2.989   Installing build dependencies: started
+6.335   Installing build dependencies: finished with status 'done'
+6.336   Getting requirements to build wheel: started
+6.548   Getting requirements to build wheel: finished with status 'done'
+6.549   Preparing metadata (pyproject.toml): started
+6.677   Preparing metadata (pyproject.toml): finished with status 'done'
+6.681 Collecting melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS (from -r requirements.txt (line 7))
+6.682   Cloning https://github.com/andimarafioti/MeloTTS.git to /tmp/pip-install-o33997uw/melotts_4b89888c4a8f45389ebbd11495d24b9f
+6.686   Running command git clone --filter=blob:none --quiet https://github.com/andimarafioti/MeloTTS.git /tmp/pip-install-o33997uw/melotts_4b89888c4a8f45389ebbd11495d24b9f
+11.49   Resolved https://github.com/andimarafioti/MeloTTS.git to commit 22866a3e7c5b8129ba9f283fb02fa232fbb99914
+11.49   Preparing metadata (setup.py): started
+11.65   Preparing metadata (setup.py): finished with status 'done'
+11.65 Collecting useful-moonshine@ git+https://github.com/andimarafioti/moonshine.git (from -r requirements.txt (line 15))
+11.65   Cloning https://github.com/andimarafioti/moonshine.git to /tmp/pip-install-o33997uw/useful-moonshine_265f29fc7875461aab02c06cc5c0cdde
+11.66   Running command git clone --filter=blob:none --quiet https://github.com/andimarafioti/moonshine.git /tmp/pip-install-o33997uw/useful-moonshine_265f29fc7875461aab02c06cc5c0cdde
+20.15   Resolved https://github.com/andimarafioti/moonshine.git to commit 21a222552e63c98ee327b5377f0c37ecda8987ee
+20.16   Preparing metadata (setup.py): started
+20.30   Preparing metadata (setup.py): finished with status 'done'
+20.31 Collecting MyShell-OpenVoice@ git+https://github.com/myshell-ai/OpenVoice.git (from -r requirements.txt (line 35))
+20.31   Cloning https://github.com/myshell-ai/OpenVoice.git to /tmp/pip-install-o33997uw/myshell-openvoice_38fd8c16d8c54ec49bdaf3a1643de790
+20.31   Running command git clone --filter=blob:none --quiet https://github.com/myshell-ai/OpenVoice.git /tmp/pip-install-o33997uw/myshell-openvoice_38fd8c16d8c54ec49bdaf3a1643de790
+23.69   Resolved https://github.com/myshell-ai/OpenVoice.git to commit 74a1d147b17a8c3092dd5430504bd83ef6c7eb23
+23.69   Preparing metadata (setup.py): started
+23.82   Preparing metadata (setup.py): finished with status 'done'
+24.57 Collecting nltk==3.9.1 (from -r requirements.txt (line 5))
+25.40   Downloading nltk-3.9.1-py3-none-any.whl.metadata (2.9 kB)
+25.41 Requirement already satisfied: torch>=2.4.0 in /opt/conda/lib/python3.11/site-packages (from -r requirements.txt (line 8)) (2.8.0+cu129)
+25.66 Collecting sounddevice==0.5.0 (from -r requirements.txt (line 9))
+25.86   Downloading sounddevice-0.5.0-py3-none-any.whl.metadata (1.4 kB)
+26.06 Collecting ChatTTS>=0.1.1 (from -r requirements.txt (line 10))
+26.41   Downloading chattts-0.2.4.tar.gz (176 kB)
+28.07   Preparing metadata (setup.py): started
+28.19   Preparing metadata (setup.py): finished with status 'done'
+28.46 Collecting funasr>=1.1.6 (from -r requirements.txt (line 11))
+28.86   Downloading funasr-1.2.6-py3-none-any.whl.metadata (32 kB)
+29.88 Collecting modelscope>=1.17.1 (from -r requirements.txt (line 12))
+30.07   Downloading modelscope-1.28.2-py3-none-any.whl.metadata (39 kB)
+30.57 Collecting deepfilternet>=0.5.6 (from -r requirements.txt (line 13))
+30.77   Downloading deepfilternet-0.5.6-py3-none-any.whl.metadata (1.7 kB)
+31.31 Collecting openai>=1.40.1 (from -r requirements.txt (line 14))
+31.50   Downloading openai-1.99.9-py3-none-any.whl.metadata (29 kB)
+32.76 Collecting faster-whisper>=1.0.3 (from -r requirements.txt (line 18))
+32.98   Downloading faster_whisper-1.2.0-py3-none-any.whl.metadata (16 kB)
+33.24 Collecting librosa==0.9.1 (from -r requirements.txt (line 19))
+33.42   Downloading librosa-0.9.1-py3-none-any.whl.metadata (6.9 kB)
+34.00 Collecting pydub==0.25.1 (from -r requirements.txt (line 20))
+34.19   Downloading pydub-0.25.1-py2.py3-none-any.whl.metadata (1.4 kB)
+34.39 Collecting wavmark==0.0.3 (from -r requirements.txt (line 21))
+34.58   Downloading wavmark-0.0.3-py3-none-any.whl.metadata (5.0 kB)
+34.80 Collecting eng_to_ipa==0.0.2 (from -r requirements.txt (line 23))
+35.00   Downloading eng_to_ipa-0.0.2.tar.gz (2.8 MB)
+69.96      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.8/2.8 MB 373.9 kB/s eta 0:00:00
+70.04   Preparing metadata (setup.py): started
+70.16   Preparing metadata (setup.py): finished with status 'done'
+70.37 Collecting inflect==7.0.0 (from -r requirements.txt (line 24))
+70.57   Downloading inflect-7.0.0-py3-none-any.whl.metadata (21 kB)
+70.81 Collecting unidecode==1.3.7 (from -r requirements.txt (line 25))
+71.01   Downloading Unidecode-1.3.7-py3-none-any.whl.metadata (13 kB)
+71.31 Collecting whisper-timestamped==1.14.2 (from -r requirements.txt (line 26))
+71.50   Downloading whisper_timestamped-1.14.2-py3-none-any.whl.metadata (1.2 kB)
+71.71 Collecting python-dotenv (from -r requirements.txt (line 27))
+71.91   Downloading python_dotenv-1.1.1-py3-none-any.whl.metadata (24 kB)
+72.31 Collecting pypinyin==0.50.0 (from -r requirements.txt (line 28))
+72.50   Downloading pypinyin-0.50.0-py2.py3-none-any.whl.metadata (12 kB)
+72.71 Collecting cn2an==0.5.22 (from -r requirements.txt (line 29))
+72.90   Downloading cn2an-0.5.22-py3-none-any.whl.metadata (10 kB)
+73.11 Collecting jieba==0.42.1 (from -r requirements.txt (line 30))
+73.29   Downloading jieba-0.42.1.tar.gz (19.2 MB)
+80.77      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.2/19.2 MB 2.7 MB/s eta 0:00:00
+81.15   Preparing metadata (setup.py): started
+81.27   Preparing metadata (setup.py): finished with status 'done'
+81.74 Collecting gradio==3.48.0 (from -r requirements.txt (line 31))
+81.93   Downloading gradio-3.48.0-py3-none-any.whl.metadata (17 kB)
+82.30 Collecting langid==1.1.6 (from -r requirements.txt (line 32))
+82.49   Downloading langid-1.1.6.tar.gz (1.9 MB)
+83.11      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 3.9 MB/s eta 0:00:00
+83.18   Preparing metadata (setup.py): started
+83.30   Preparing metadata (setup.py): finished with status 'done'
+83.55 Collecting transformers<=4.46.1,>=4.46.1 (from parler_tts@ git+https://github.com/huggingface/parler-tts.git->-r requirements.txt (line 6))
+83.75   Downloading transformers-4.46.1-py3-none-any.whl.metadata (44 kB)
+84.20 Collecting sentencepiece (from parler_tts@ git+https://github.com/huggingface/parler-tts.git->-r requirements.txt (line 6))
+84.48   Downloading sentencepiece-0.2.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (10 kB)
+84.69 Collecting descript-audio-codec (from parler_tts@ git+https://github.com/huggingface/parler-tts.git->-r requirements.txt (line 6))
+84.88   Downloading descript_audio_codec-1.0.0-py3-none-any.whl.metadata (7.8 kB)
+84.89 Collecting descript-audiotools@ git+https://github.com/descriptinc/audiotools (from parler_tts@ git+https://github.com/huggingface/parler-tts.git->-r requirements.txt (line 6))
+84.89   Cloning https://github.com/descriptinc/audiotools to /tmp/pip-install-o33997uw/descript-audiotools_5872e43866794768863902babeb5c469
+84.89   Running command git clone --filter=blob:none --quiet https://github.com/descriptinc/audiotools /tmp/pip-install-o33997uw/descript-audiotools_5872e43866794768863902babeb5c469
+87.99   Resolved https://github.com/descriptinc/audiotools to commit 348ebf2034ce24e2a91a553e3171cb00c0c71678
+88.00   Preparing metadata (setup.py): started
+88.12   Preparing metadata (setup.py): finished with status 'done'
+88.51 Collecting protobuf>=4.0.0 (from parler_tts@ git+https://github.com/huggingface/parler-tts.git->-r requirements.txt (line 6))
+88.71   Downloading protobuf-6.31.1-cp39-abi3-manylinux2014_x86_64.whl.metadata (593 bytes)
+89.14 Collecting txtsplit (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+89.33   Downloading txtsplit-1.0.0.tar.gz (6.2 kB)
+89.64   Preparing metadata (setup.py): started
+89.77   Preparing metadata (setup.py): finished with status 'done'
+89.77 Requirement already satisfied: torchaudio in /opt/conda/lib/python3.11/site-packages (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7)) (2.8.0+cu129)
+90.42 Collecting botocore>=1.34.98 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+91.11   Downloading botocore-1.40.8-py3-none-any.whl.metadata (5.7 kB)
+91.31 Collecting cached_path>=1.6.2 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+91.50   Downloading cached_path-1.7.3-py3-none-any.whl.metadata (19 kB)
+91.83 Collecting num2words==0.5.12 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+92.48   Downloading num2words-0.5.12-py3-none-any.whl.metadata (11 kB)
+92.68 Collecting unidic_lite==1.0.8 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+92.87   Downloading unidic-lite-1.0.8.tar.gz (47.4 MB)
+110.5      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 47.4/47.4 MB 3.0 MB/s eta 0:00:00
+112.0   Preparing metadata (setup.py): started
+112.1   Preparing metadata (setup.py): finished with status 'done'
+112.7 Collecting unidic==1.1.0 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+112.9   Downloading unidic-1.1.0.tar.gz (7.7 kB)
+112.9   Preparing metadata (setup.py): started
+113.0   Preparing metadata (setup.py): finished with status 'done'
+113.6 Collecting mecab-python3==1.0.9 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+113.8   Downloading mecab_python3-1.0.9-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.1 kB)
+114.0 Collecting pykakasi==2.2.1 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+114.2   Downloading pykakasi-2.2.1-py3-none-any.whl.metadata (10 kB)
+114.5 Collecting fugashi==1.3.0 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+114.7   Downloading fugashi-1.3.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.0 kB)
+114.9 Collecting g2p_en==2.1.0 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+115.1   Downloading g2p_en-2.1.0-py3-none-any.whl.metadata (4.5 kB)
+115.3 Collecting anyascii==0.3.2 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+115.5   Downloading anyascii-0.3.2-py3-none-any.whl.metadata (1.5 kB)
+115.7 Collecting jamo==0.4.1 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+115.9   Downloading jamo-0.4.1-py3-none-any.whl.metadata (2.3 kB)
+116.1 Collecting gruut==2.2.3 (from gruut[de,es,fr]==2.2.3->melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+116.3   Downloading gruut-2.2.3.tar.gz (73 kB)
+116.5   Preparing metadata (setup.py): started
+116.6   Preparing metadata (setup.py): finished with status 'done'
+116.8 Collecting g2pkk>=0.1.1 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+117.0   Downloading g2pkk-0.1.2-py3-none-any.whl.metadata (2.0 kB)
+117.0 Requirement already satisfied: tqdm in /opt/conda/lib/python3.11/site-packages (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7)) (4.67.1)
+117.2 Collecting tensorboard==2.16.2 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+117.4   Downloading tensorboard-2.16.2-py3-none-any.whl.metadata (1.6 kB)
+117.6 Collecting loguru==0.7.2 (from melotts@ git+https://github.com/andimarafioti/MeloTTS.git#egg=MeloTTS->-r requirements.txt (line 7))
+117.9   Downloading loguru-0.7.2-py3-none-any.whl.metadata (23 kB)
+118.2 Collecting numba (from useful-moonshine@ git+https://github.com/andimarafioti/moonshine.git->-r requirements.txt (line 15))
+118.5   Downloading numba-0.61.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.8 kB)
+118.9 Collecting tokenizers>=0.19.0 (from useful-moonshine@ git+https://github.com/andimarafioti/moonshine.git->-r requirements.txt (line 15))
+119.4   Downloading tokenizers-0.21.4-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+119.6 Collecting einops==0.8.0 (from useful-moonshine@ git+https://github.com/andimarafioti/moonshine.git->-r requirements.txt (line 15))
+120.2   Downloading einops-0.8.0-py3-none-any.whl.metadata (12 kB)
+120.5 Collecting keras==3.6.0 (from useful-moonshine@ git+https://github.com/andimarafioti/moonshine.git->-r requirements.txt (line 15))
+120.7   Downloading keras-3.6.0-py3-none-any.whl.metadata (5.8 kB)
+120.8 INFO: pip is looking at multiple versions of myshell-openvoice to determine which version is compatible with other requirements. This could take a while.
+120.8 ERROR: Cannot install -r requirements.txt (line 35) and faster-whisper>=1.0.3 because these package versions have conflicting dependencies.
+120.8
+120.8 The conflict is caused by:
+120.8     The user requested faster-whisper>=1.0.3
+120.8     myshell-openvoice 0.0.0 depends on faster-whisper==0.9.0
+120.8
+120.8 To fix this you could try to:
+120.8 1. loosen the range of package versions you've specified
+120.8 2. remove package versions to allow pip to attempt to solve the dependency conflict
+120.8
+121.7 ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+------
+Dockerfile.openvoice:19
+--------------------
+  17 |     # Use the dedicated requirements file for OpenVoice
+  18 |     COPY requirements.openvoice.txt ./requirements.txt
+  19 | >>> RUN pip install --no-cache-dir -r requirements.txt
+  20 |     RUN pip install --no-cache-dir "httpx[socks]"
+  21 |     # RUN pip install --no-cache-dir nvidia-cudnn-cu12
+--------------------
+error: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+FATA[0122] no image was built

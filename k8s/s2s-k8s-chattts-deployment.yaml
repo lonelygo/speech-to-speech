@@ -1,0 +1,97 @@
+# --- 部署 (Deployment) ---
+# 定义如何运行你的应用程序Pod。
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s2s-chattts-deployment
+  namespace: maas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s2s-chattts-pipeline
+  template:
+    metadata:
+      labels:
+        app: s2s-chattts-pipeline
+    spec:
+      volumes:
+        - name: model-cache-storage
+          persistentVolumeClaim:
+            claimName: s2s-model-cache-pvc
+      containers:
+        - name: s2s-container
+          image: s2s-original:v3
+          imagePullPolicy: IfNotPresent
+          command: ["python", "s2s_pipeline.py"]
+          env:
+            - name: NLTK_DATA
+              value: "/root/.cache/nltk_data"
+            - name: "http_proxy"
+              value: "http://172.16.40.42:7890"
+            - name: "https_proxy"
+              value: "http://172.16.40.42:7890"
+            - name: "all_proxy"
+              value: "http://172.16.40.42:7890"
+            # 为了最大兼容性，通常同时提供大写和小写版本
+            - name: "HTTP_PROXY"
+              value: "http://172.16.40.42:7890"
+            - name: "HTTPS_PROXY"
+              value: "http://172.16.40.42:7890"
+            - name: "ALL_PROXY"
+              value: "http://172.16.40.42:7890"
+          args: [
+            "--device", "cuda",
+            "--llm", "open_api",
+            "--open_api_model_name", "DeepSeek-R1-0528-Qwen3-8B",
+            "--open_api_base_url", "https://maas.mubingdata.com/v1",
+            "--open_api_api_key", "mu-s2s-RYeD3YTimKAvJIymO4R9TY7hRTOTJV5Gcs",
+            "--open_api_stream", "true",
+            "--stt", "faster-whisper",
+            "--faster_whisper_stt_model_name", "large-v3",
+            "--faster_whisper_stt_device", "cuda",
+            "--faster_whisper_stt_gen_language", "zh",
+            "--faster_whisper_stt_compute_type", "float16",
+            "--language", "zh",
+            "--stt_compile_mode", "reduce-overhead",
+            "--tts", "chatTTS",
+            "--chat_tts_device", "cuda",
+            "--chat_tts_stream", "true",
+            "--recv_host", "0.0.0.0",
+            "--send_host", "0.0.0.0"
+          ]
+          volumeMounts:
+            - name: model-cache-storage
+              mountPath: "/root/.cache" # 将存储挂载到Hugging Face默认的缓存目录
+          resources:
+            requests:
+              cpu: "4"
+              memory: 16Gi
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "8"
+              memory: 32Gi
+              nvidia.com/gpu: "1"
+---
+# --- 服务 (Service) ---
+# 暴露Pod的端口，以便可以从外部访问。
+apiVersion: v1
+kind: Service
+metadata:
+  name: s2s-chattts-service
+  namespace: maas
+  annotations:
+    purelb.io/service-group: vlan20-pool
+spec:
+  type: LoadBalancer
+  selector:
+    app: s2s-chattts-pipeline
+  ports:
+    - name: recv-port
+      protocol: TCP
+      port: 12345
+      targetPort: 12345
+    - name: send-port
+      protocol: TCP
+      port: 12346
+      targetPort: 12346
